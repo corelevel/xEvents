@@ -1,12 +1,3 @@
-create event session xQueryPlanProfile on server
-add event sqlserver.query_plan_profile(set collect_database_name=(0)
-    action(sqlserver.client_app_name,sqlserver.client_hostname,sqlserver.[database_name],sqlserver.sql_text,sqlserver.username)
-    where ([duration]>(50000))) -- it's microseconds
-add target package0.event_file(set filename=N'xQueryPlanProfile',max_file_size=(250),max_rollover_files=(3))
-with (MAX_MEMORY=16384 KB,EVENT_RETENTION_MODE=ALLOW_SINGLE_EVENT_LOSS,MAX_DISPATCH_LATENCY=120 SECONDS,MAX_EVENT_SIZE=0 KB,MEMORY_PARTITION_MODE=NONE,TRACK_CAUSALITY=ON,STARTUP_STATE=ON)
-GO
-alter event session xQueryPlanProfile on server state = start
-go
 ------------------------------------------------------------------
 /*
 you should configure this parameter to start capture that type of event
